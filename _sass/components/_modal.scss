@@ -1,0 +1,84 @@
+.modal {
+
+  background: #ffffff;
+
+  width: 45%;
+  min-width: 250px;
+  padding: 25px;
+  border: 2px dashed #000000;
+  box-shadow: 0 0 0 10px #ffffff;
+
+  font-size: 1.3em;
+
+  & h2 {
+
+    font-family: 'Editundo', cursive;
+    font-size: 4em;
+    text-align: center;
+
+    margin: 0 0 30px 0;
+  }
+  
+  & h3 {
+    margin: 0 3px 0 0;
+  }
+  
+  & p {
+
+    font-size: 1.1em;
+    margin: 0.5rem 0;
+  }
+
+  .rules {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    font-family: monospace;
+    text-transform: lowercase;
+
+    ul {
+      padding-left: 1rem;
+    }
+  }
+
+  & p:first-child {
+
+    display: block;
+
+    margin: 33px 0;
+  }
+
+  &-container {
+
+    z-index: 2000;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background: rgba(0,0,0,.5);
+
+    justify-content: center;
+    align-items: center;
+
+    &.show {
+      display: flex;
+    }
+    &.show .modal {
+      animation: modal .5s;
+    }
+
+    &.game-over {
+
+      background-color: #000000;
+      font-family: 'Editundo', cursive;
+    }
+  }
+}
+
+

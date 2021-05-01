@@ -1,0 +1,13 @@
+.arrow {
+
+  &_control::before{
+
+    font-size: 56px;
+  }
+
+  &_directions button {
+
+    background-color: #ffffff;
+    border-style: none;
+  }
+}

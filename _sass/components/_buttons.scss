@@ -1,0 +1,24 @@
+input {
+
+  &.button {
+
+    cursor: pointer;
+
+    color: #ffffff;
+    font-size: 30px;
+    text-align: center;
+    font-family: 'Editundo', 
+                  'Gill Sans', 
+                  'Gill Sans MT', 
+                  'Calibri', 
+                  'Trebuchet MS', 
+                  'sans-serif';
+
+    background-color: rgb(145, 190, 118);
+
+    padding: 1rem;
+
+    border-bottom: 9px solid rgb(102, 155, 102);
+    border-right: 9px solid rgb(171, 207, 171);
+  }
+}

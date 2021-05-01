@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+
+    {{ content }}
+
+    <script>
+      var baseURL = "{{ site.baseurl }}";
+    </script>
+
+    <script src="{{ site.baseurl}}/assets/js/resources.js"></script>
+    <script src="{{ site.baseurl}}/assets/js/engine.js"></script>
+    <script src="{{ site.baseurl}}/assets/js/game.js"></script>
+    <script src='{{ site.baseurl}}/assets/js/main.js'></script>
+  </body>
+</html>

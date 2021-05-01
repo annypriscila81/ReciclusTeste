@@ -1,0 +1,20 @@
+---
+---
+$baseurl: "{{ site.baseurl }}";
+
+// sobrescrições de estilos bootstrap
+@import 'vendor/bootstrap.scss';
+
+// base
+@import 'base/reset.scss';
+@import 'base/typography.scss';
+
+// animation
+@import 'animations/modal.scss';
+
+// components
+@import 'components/arrows.scss';
+@import 'components/buttons.scss';
+@import 'components/gameover.scss';
+@import 'components/modal.scss';
+@import 'components/panel.scss';
