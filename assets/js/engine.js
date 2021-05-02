@@ -39,14 +39,15 @@ class Engine {
     * para que quando todas estas imagens estejam adequadamente carregadas e nosso 
     * jogo seja iniciado. */
     //TODO: replace for other background
-    Resources.load([
+
+    this.game.resources.load([
       `${baseURL}/assets/img/sprites/stone-block.png`,
       `${baseURL}/assets/img/sprites/water-block.png`,
       `${baseURL}/assets/img/sprites/grass-block.png`,
       `${baseURL}/assets/img/entities/enemy-bug.png`,
       `${baseURL}/assets/img/entities/char/char-boy.png`
     ]);
-    Resources.onReady(this.init);
+    this.game.resources.onReady(this.init);
   }
 
   /* Esta função serve como um ponto de início para o loop do jogo, além de 
@@ -157,7 +158,7 @@ class Engine {
          * Estamos utilizando métodos utilitário de Resources para que tenhamos o 
          * benefício de fazer cache de imagens, já que elas são desenhadas 
          * repetidamente. */
-        this.ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+        this.ctx.drawImage(this.game.resources.get(rowImages[row]), col * 101, row * 83);
       }
     }
 

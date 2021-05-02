@@ -6,11 +6,23 @@
  * cache simples à ser utilizado quando tentamos carregar a mesma imagem por 
  * diversas vezes seguidas. */
 
-(() => {
+class Resources {
 
-  const loading = [];
-  const resourceCache = {};
-  const readyCallbacks = [];
+  loading = [];
+  resourceCache = {};
+  readyCallbacks = [];
+
+  constructor() {
+
+    /* Este objeto define todas as funções disponíveis publicamente, disponíveis 
+    * ao criar um objeto global Resources. */
+    // window.Resources = {
+    //   load,
+    //   get,
+    //   onReady,
+    //   isReady
+    // };
+  }
 
   /* Esta é a função de carregamento e images, disponível publicamente.
    * 
@@ -19,20 +31,20 @@
    * de carregamento de images, para cada URL passada.*/
   load = (urls) => {
 
-    if(urls instanceof Array) urls.forEach(url => _load(url));
-    else _load(urls);
+    if(urls instanceof Array) urls.forEach(url => this._load(url));
+    else this._load(urls);
   }
 
   /* Esta é o nossa função privada de carregamento de images.
    * É invocada por nossa função de carregamento de imagens disponível publicamente. */
   _load = (url) => {
 
-    if(resourceCache[url]) {
+    if(this.resourceCache[url]) {
 
       /* Se a URL já foi usada anteriormente, a imagem estará presente 
        * em nossa array resourceCache[]. Basta retornar esta imagem, invés de 
        * recarregá-la outra vez. */
-      return resourceCache[url];
+      return this.resourceCache[url];
 
     } else {
 
@@ -41,11 +53,11 @@
       const image = new Image();
       image.onload = () => {
 
-        resourceCache[url] = image;
+        this.resourceCache[url] = image;
 
         /* Quando a imagem está propriamente carregada, invocamos todos 
          * os callbacks de onReady(). */
-        if(isReady()) { readyCallbacks.forEach(func => func())}
+        if(this.isReady()) { this.readyCallbacks.forEach(callback => callback())}
       };
 
       /* Configura o valor inicial do cache para false.
@@ -54,7 +66,7 @@
        * é invocado. 
        * 
        * Depois disso, o atributo src da imagem é finalmente definido. */
-      resourceCache[url] = false;
+      this.resourceCache[url] = false;
       image.src = url;
     }
   }
@@ -63,7 +75,7 @@
    * carregadas anteriormente. Se uma imagem estiver em cache, esta função 
    * opera do mesmo modo que load(). */
   get = (url) => {
-    return resourceCache[url];
+    return this.resourceCache[url];
   }
 
   /* Esta função determina se todas as imagens requisitadas para carregamento
@@ -72,8 +84,8 @@
 
     let ready = true;
 
-    for(let key in resourceCache) {
-      if(resourceCache.hasOwnProperty(key) && !resourceCache[key]) ready = false;
+    for(let key in this.resourceCache) {
+      if(this.resourceCache.hasOwnProperty(key) && !this.resourceCache[key]) ready = false;
     }
 
     return ready;
@@ -81,16 +93,7 @@
 
   /* Esta função adiciona callbacks à uma pilha, os quais serão invocados 
    * quando todas as imagens requisitadas estiverem adequadamente carregadas.  */
-  onReady = (func) => {
-    readyCallbacks.push(func);
+  onReady = (callback) => {
+    this.readyCallbacks.push(callback);
   }
-
-  /* Este objeto define todas as funções disponíveis publicamente, disponíveis 
-   * ao criar um objeto global Resources. */
-  window.Resources = {
-    load,
-    get,
-    onReady,
-    isReady
-  };
-})();
+}
