@@ -49,11 +49,8 @@ class Game {
 
     document.addEventListener('keyup', (e) => {
 
-      // TODO: disable up and down
       const allowedKeys = {
-        38: 'up',
         39: 'right',
-        40: 'down',
         37: 'left'
       };
 
@@ -61,14 +58,8 @@ class Game {
     });
 
     // Setas de direção para dispositivos móveis.
-    document.getElementById('arrow-up')
-            .addEventListener('click', () => input('up'));
-
     document.getElementById('arrow-right')
             .addEventListener('click', () => input('right'));
-
-    document.getElementById('arrow-down')
-            .addEventListener('click', () => input('down'));
 
     document.getElementById('arrow-left')
             .addEventListener('click', () => input('left'));
