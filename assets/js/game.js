@@ -246,7 +246,6 @@ class Player {
     this.lives--;
 
     myGame.updateTopPanel();
-    this.backToInitialPosition();
 
     // TODO: implement different business logic (lives === 0 && health === 0)
     if (this.lives === 0) myGame.showGameOverScreen();
