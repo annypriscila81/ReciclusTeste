@@ -284,7 +284,6 @@ class Player {
   };
 }
 
-// TODO: fisher yates utils
 /*
  ****** UTILS ******
 */
@@ -299,5 +298,23 @@ class Utils {
     max = Math.floor(max);
   
     return Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  // Fisher-Yates shuffle algorithm
+  static shuffleArray(array) {
+
+    let value, index;
+    let iteration = array.length;
+  
+    while (iteration) {
+  
+      index = Math.floor(Math.random() * iteration--);
+  
+      value = array[iteration];
+      array[iteration] = array[index];
+      array[index] = value;
+    }
+  
+    return array;
   }
 }
