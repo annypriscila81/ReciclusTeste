@@ -6,7 +6,6 @@ class Game {
   player;
   enemies;
 
-  // TODO: should receive settings as parameters
   constructor(config) {
 
     this.config = config.game;
@@ -175,26 +174,25 @@ class Enemy {
      * coordenada vertical. */
     if (this.y > this.game.engine.canvas.height) {
 
-      // TODO: we need a more elegant solution
-      this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
+      this.x = this.getRandomColumn();
       this.y = -100;
     }
   };
   
   reset = () => {
 
-    this.setSpeed();
-
-    this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
+    this.x = this.getRandomColumn();
     this.y = -100;
+
+    this.setSpeed();
   };
   
   goToNextLevel = () => {
 
-    this.setSpeed();
-
-    this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
+    this.x = this.getRandomColumn();
     this.y = -100;
+
+    this.setSpeed();
   };
   
   render = () => {
@@ -224,6 +222,14 @@ class Enemy {
       this.speed += Utils.getRandomInt(100,200);
     };
   };
+
+  getRandomColumn = () => {
+
+    let randomColumn = Utils.shuffleArray([0, 100, 200, 300, 400]);
+        randomColumn = randomColumn[0];
+
+    return randomColumn
+  }
 }
 
 class Player {
