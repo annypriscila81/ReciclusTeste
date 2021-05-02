@@ -1,5 +1,6 @@
 class Game {
 
+  engine;
   score;
   level;
   player;
@@ -8,6 +9,7 @@ class Game {
   // TODO: should receive settings as parameters
   constructor() {
 
+    this.engine = new Engine(this);
     this.score = 0;
     this.level = 0;
     this.player = new Player(this, 100, 400);
@@ -189,7 +191,7 @@ class Enemy {
   };
   
   render = () => {
-      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.game.engine.ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
   
   checkCollisions = () => {
@@ -256,7 +258,7 @@ class Player {
   };
   
   render = () => {
-      ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.game.engine.ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
   
   /* Invocado quando o jogador chega aos blocs de água. */

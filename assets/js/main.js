@@ -12,3 +12,4 @@ window.onload = () => {
 // TODO: entities class to be extended or implemented?
 // TODO: mais de um jogador
 // TODO: fix gameover and game start modals reposivity
+// TODO: revisar tradução

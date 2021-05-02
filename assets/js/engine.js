@@ -15,19 +15,39 @@
  * Deste modo, o desenvolvimento no arquivo game.js fica mais simples.
  */
 
-const Engine = ((global) => {
+class Engine {
 
-  let doc = global.document,
-      win = global.window,
-      canvas = doc.createElement('canvas'),
-      ctx = canvas.getContext('2d'),
-      lastTime;
+  game;
+  lastTime;
+  canvas;
+  ctx;
 
-  //TODO: make it a responsive game
-  canvas.width = 505;
-  canvas.height = 606;
+  constructor(game) {
 
-  doc.getElementById("canvas_container").appendChild(canvas);
+    this.game = game;
+    this.canvas = document.createElement('canvas'),
+    this.ctx = this.canvas.getContext('2d');
+
+    //TODO: make it a responsive game
+    this.canvas.width = 505;
+    this.canvas.height = 606;
+
+    document.getElementById("canvas_container").appendChild(this.canvas);
+
+    /* Aqui, carregamos todas as images que sabemos que vamos precisar para desenhar 
+    * o level do nosso jogo. Depois, init() é definido como método de callback 
+    * para que quando todas estas imagens estejam adequadamente carregadas e nosso 
+    * jogo seja iniciado. */
+    //TODO: replace for other background
+    Resources.load([
+      `${baseURL}/assets/img/sprites/stone-block.png`,
+      `${baseURL}/assets/img/sprites/water-block.png`,
+      `${baseURL}/assets/img/sprites/grass-block.png`,
+      `${baseURL}/assets/img/entities/enemy-bug.png`,
+      `${baseURL}/assets/img/entities/char/char-boy.png`
+    ]);
+    Resources.onReady(this.init);
+  }
 
   /* Esta função serve como um ponto de início para o loop do jogo, além de 
    * se encarregar da invocação dos métodos de atualização e renderização.  */
@@ -39,18 +59,18 @@ const Engine = ((global) => {
      * diferentes velocidades, nós precisamos obter um valor constante e identico no 
      * computador de todo mundo (independente de quão rápido seja o computador). */
     const now = Date.now(),
-          dt = (now - lastTime) / 1000.0;
+          dt = (now - this.lastTime) / 1000.0;
 
-    update(dt);
-    render();
+    this.update(dt);
+    this.render();
 
     /* Cria nossa variável lastTime que é usada para determinar o delta timing,
      * quando a função for invocada novamente. */
-    lastTime = now;
+    this.lastTime = now;
 
     /* Use a função nativa do navegador "requestAnimationFrame" para invocar esta
      * função recursivamente, sempre que o navegador puder desenhar um novo frame. */
-    win.requestAnimationFrame(main);
+    window.requestAnimationFrame(this.main);
   }
 
   /* Esta função faz algumas configurações iniciais que devem acontecer somente uma
@@ -59,9 +79,9 @@ const Engine = ((global) => {
   init = () => {
 
     //TODO: don't spawn entities until user starts game
-    reset();
-    lastTime = Date.now();
-    main();
+    this.reset();
+    this.lastTime = Date.now();
+    this.main();
   }
 
   /* Esta função é invocada por main() e ela invoca todas as funções que podem
@@ -73,8 +93,8 @@ const Engine = ((global) => {
    * */
   update = (dt) => {
 
-    updateEntities(dt);
-    checkCollisions();
+    this.updateEntities(dt);
+    this.checkCollisions();
   }
 
   /* Esta função é invocada por update() para fazer iteração e invocação 
@@ -86,12 +106,12 @@ const Engine = ((global) => {
   */
   updateEntities = (dt) => {
 
-    reciclus.enemies.forEach((enemy) => enemy.update(dt));
+    this.game.enemies.forEach((enemy) => enemy.update(dt));
   }
 
   checkCollisions = () => {
 
-    reciclus.enemies.forEach((enemy) => enemy.checkCollisions());
+    this.game.enemies.forEach((enemy) => enemy.checkCollisions());
   }
 
   /* Esta função, inicialmente, desenha o level do jogo. É só depois que a 
@@ -123,7 +143,7 @@ const Engine = ((global) => {
       let row, col;
     
     // antes de desenhar no canvas, limpe-o.
-    ctx.clearRect(0,0,canvas.width,canvas.height)
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     /* Faça iterações de acordo com o número de linhas e colunas definidas acima e,
      * usando a array rowImages: desenhe a imagem correta para aquela parte do grid. */
@@ -137,19 +157,19 @@ const Engine = ((global) => {
          * Estamos utilizando métodos utilitário de Resources para que tenhamos o 
          * benefício de fazer cache de imagens, já que elas são desenhadas 
          * repetidamente. */
-        ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+        this.ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
       }
     }
 
-    renderEntities();
+    this.renderEntities();
   }
 
   /* Esta função é invocada por render() a cada game tick. O propósito desta é 
    * invocar funções render() que você tenha definido nas entidades do jogo, em game.js. */
   renderEntities = () => {
 
-    reciclus.enemies.forEach((enemy) => enemy.render());
-    reciclus.player.render();
+    this.game.enemies.forEach((enemy) => enemy.render());
+    this.game.player.render();
   }
 
   /* Esta função não faz nada, mas pode servir para manipular o estado de reset 
@@ -158,24 +178,4 @@ const Engine = ((global) => {
   reset = () => {
     // noop
   }
-
-  /* Aqui, carregamos todas as images que sabemos que vamos precisar para desenhar 
-   * o level do nosso jogo. Depois, init() é definido como método de callback 
-   * para que quando todas estas imagens estejam adequadamente carregadas, nosso 
-   * jogo seja iniciado. */
-  //TODO: replace for other background
-  Resources.load([
-    `${baseURL}/assets/img/sprites/stone-block.png`,
-    `${baseURL}/assets/img/sprites/water-block.png`,
-    `${baseURL}/assets/img/sprites/grass-block.png`,
-    `${baseURL}/assets/img/entities/enemy-bug.png`,
-    `${baseURL}/assets/img/entities/char/char-boy.png`
-  ]);
-  Resources.onReady(init);
-  
-  /* Atribui objeto de contexto do canvas à uma variável global (o objeto window
-   * quando o jogo é executado em navegadores).
-   * 
-   * Esta é uma forma de facilitar o uso deste objeto, lá no arquivo game.js. */
-  global.ctx = ctx;
-})(this);
+}
