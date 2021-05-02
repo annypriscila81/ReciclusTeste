@@ -1,27 +1,24 @@
 class Game {
 
   engine;
-  score;
+  config;
   level;
   player;
   enemies;
 
   // TODO: should receive settings as parameters
-  constructor() {
+  constructor(config) {
+
+    this.config = config.game;
 
     this.resources = new Resources();
-    this.engine = new Engine(this);
+    this.engine = new Engine(this, config.engine, config.resources);
 
-    this.score = 0;
-    this.level = 0;
-    this.player = new Player(this, 100, 400);
+    this.level = config.game.level;
+    this.player = new Player(this, config.player);
 
     // TODO: calculate and insert enemies automatically
-    this.enemies = [
-      new Enemy(this, 40),
-      new Enemy(this, 130),
-      new Enemy(this, 220)
-    ];
+    this.enemies = config.game.enemies.map(config => new Enemy(this, config));
   }
 
   updateTopPanel = () => {
@@ -134,7 +131,7 @@ class Game {
 
   reset = () => {
 
-    this.level = 0;
+    this.level = this.config.level;
     this.player.reset();
 
     for(let index = 0, max = this.enemies.length; index < max; index++){
@@ -148,13 +145,19 @@ class Game {
 class Enemy {
 
   game;
+  config;
 
-  constructor(game, x) {
+  speed = 0;
 
+  constructor(game, config) {
+
+    const { sprite, xCoord } = config;
+
+    this.config = config;
     this.game = game;
-    // TODO: enemy sprite as parameter
-    this.sprite = `${baseURL}/assets/img/entities/enemy-bug.png`;
-    this.x = x;
+
+    this.sprite = sprite;
+    this.x = xCoord;
 
     this.reset();
   }
@@ -170,7 +173,7 @@ class Enemy {
     
     /* Quando o inimigo alcança a borda inferior, ele recebe uma nova 
      * coordenada vertical. */
-    if (this.y > 606) {
+    if (this.y > this.game.engine.canvas.height) {
 
       // TODO: we need a more elegant solution
       this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
@@ -180,14 +183,16 @@ class Enemy {
   
   reset = () => {
 
-    this.speed = Utils.getRandomInt(50, 150);
+    this.setSpeed();
+
     this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
     this.y = -100;
   };
   
   goToNextLevel = () => {
 
-    this.speed += Utils.getRandomInt(30,100);
+    this.setSpeed();
+
     this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
     this.y = -100;
   };
@@ -208,47 +213,56 @@ class Enemy {
       if((enemyBottomSideY > playerBottomSideY) && !(playerBottomSideY < this.y)) {
         this.game.player.hit();
       }
-    } 
+    }
+  };
+
+  setSpeed = () => {
+
+    this.speed = 0;
+
+    for(let index = 0, max = this.game.level; index < max; index++){
+      this.speed += Utils.getRandomInt(100,200);
+    };
   };
 }
 
 class Player {
 
   game;
+  config;
 
-  // TODO: make use of x and y parameters
-  constructor(game, x, y) {
+  constructor(game, config) {
+
+    const { sprite, lives, points } = config;
+
+    this.config = config;
 
     this.game = game;
-    // TODO: player sprite as parameter
-    this.sprite = `${baseURL}/assets/img/entities/char/char-boy.png`;
+    this.sprite = sprite;
     
-    this.lives = 4;
-    this.points = 0;
+    this.lives = lives;
+    this.points = points;
 
     this.backToInitialPosition();
   }
   
   reset = () => {
 
-    this.lives = 4;
-    this.points = 0;
+    this.lives = this.config.lives;
+    this.points = this.config.points;
 
     this.backToInitialPosition();
   };
   
-  // TODO: actually use parameters
-  backToInitialPosition = (x, y) => {
+  backToInitialPosition = () => {
 
-    this.x = 100;
-    this.y = 400;
+    this.x = this.config.coords.x;
+    this.y = this.config.coords.y;
   };
   
-  // TODO: dont get back to initial position
   // TODO: dissipate enemy on hit
   // TODO: lose health if hit by enemy
   // TODO: dissipate item on hit
-  // TODO: dont get back to initial position
   hit = () =>{
   
     this.lives--;

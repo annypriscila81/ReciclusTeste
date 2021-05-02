@@ -21,18 +21,24 @@ class Engine {
   lastTime;
   canvas;
   ctx;
+  row;
+  column;
 
-  constructor(game) {
+  //TODO: make it a responsive game
+  constructor(game, { canvas, row, column }, resources) {
 
     this.game = game;
-    this.canvas = document.createElement('canvas'),
+
+    this.canvas = canvas.element;
+    this.canvas.width = canvas.width;
+    this.canvas.height = canvas.height;
+
+    this.row = row;
+    this.column = column;
+
     this.ctx = this.canvas.getContext('2d');
 
-    //TODO: make it a responsive game
-    this.canvas.width = 505;
-    this.canvas.height = 606;
-
-    document.getElementById("canvas_container").appendChild(this.canvas);
+    canvas.container.appendChild(this.canvas);
 
     /* Aqui, carregamos todas as images que sabemos que vamos precisar para desenhar 
     * o level do nosso jogo. Depois, init() é definido como método de callback 
@@ -40,13 +46,7 @@ class Engine {
     * jogo seja iniciado. */
     //TODO: replace for other background
 
-    this.game.resources.load([
-      `${baseURL}/assets/img/sprites/stone-block.png`,
-      `${baseURL}/assets/img/sprites/water-block.png`,
-      `${baseURL}/assets/img/sprites/grass-block.png`,
-      `${baseURL}/assets/img/entities/enemy-bug.png`,
-      `${baseURL}/assets/img/entities/char/char-boy.png`
-    ]);
+    this.game.resources.load(resources);
     this.game.resources.onReady(this.init);
   }
 
@@ -122,34 +122,24 @@ class Engine {
    * assim que jogos funcionam: são flipbooks que criam a ilusão de animação. 
    * No entanto, por debaixo dos panos: são vários desenhos exibidos em curto 
    * espaço de tempo. */
-  render = () => {
+  render = (row = this.row, column = this.column) => {
 
     /* Esta array armazena URLs relativas das imagens utilizadas 
      * por uma determinada linha da tela do jogo. */
     //TODO: replace for other background
-    const rowImages = [
-        `${baseURL}/assets/img/sprites/water-block.png`,   // linha superior feita de água
+    const rowImages = row.images,
+          rowCount = row.count,
+          colCount = column.count;
 
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 1/3 feita de pedras
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 2/3 feita de pedras
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 3/3 feita de pedras
-
-        `${baseURL}/assets/img/sprites/grass-block.png`,   // linha 1/2 feita de grama
-        `${baseURL}/assets/img/sprites/grass-block.png`,   // linha 2/2 feita de grama
-      ],
-
-      numRows = 6,
-      numCols = 5;
-
-      let row, col;
+    let rowIndex, colIndex;
     
     // antes de desenhar no canvas, limpe-o.
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
     /* Faça iterações de acordo com o número de linhas e colunas definidas acima e,
      * usando a array rowImages: desenhe a imagem correta para aquela parte do grid. */
-    for (row = 0; row < numRows; row++) {
-      for (col = 0; col < numCols; col++) {
+    for (rowIndex = 0; rowIndex < rowCount; rowIndex++) {
+      for (colIndex = 0; colIndex < colCount; colIndex++) {
 
         /* Para começar a desenhar, a função drawImage() do elemento de contexto 
          * do canvas requer 3 parâmetros: url da imagem à ser desenhada, 
@@ -158,7 +148,11 @@ class Engine {
          * Estamos utilizando métodos utilitário de Resources para que tenhamos o 
          * benefício de fazer cache de imagens, já que elas são desenhadas 
          * repetidamente. */
-        this.ctx.drawImage(this.game.resources.get(rowImages[row]), col * 101, row * 83);
+        const URL = this.game.resources.get(rowImages[rowIndex]);
+        const xCoord = colIndex * 101;
+        const yCoord = rowIndex * 83;
+
+        this.ctx.drawImage(URL, xCoord, yCoord);
       }
     }
 
