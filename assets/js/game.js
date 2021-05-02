@@ -213,6 +213,7 @@ class Enemy {
 
       if((enemyBottomSideY > playerBottomSideY) && !(playerBottomSideY < this.y)) {
         this.game.player.hit();
+        this.reset();
       }
     }
   };
@@ -361,7 +362,6 @@ class Player {
     this.y = this.config.coords.y;
   };
   
-  // TODO: dissipate enemy on hit
   // TODO: lose health if hit by enemy
   // TODO: dissipate item on hit
   hit = () =>{
