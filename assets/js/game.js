@@ -395,13 +395,13 @@ class Player {
     this.game.goToNextLevel();
   };
   
-  // TODO: automatically determine boundaries
   handleInput = (key) => {
 
     switch (key) {
       case 'right':
+        const lastColumn = this.game.engine.canvas.width - this.game.engine.column.count;
         this.x += 100;
-        if (this.x === 500) this.x = 400;
+        if (this.x === lastColumn) this.x = 400;
         break;
 
       case 'left':
