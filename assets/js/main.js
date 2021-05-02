@@ -21,7 +21,7 @@ const config = {
 
     items: [
       { 
-        sprite: `${baseURL}/assets/img/objects/heart.png`,
+        sprite: `${baseURL}/assets/img/objects/plastico.png`,
         xCoord: 40 
       }
     ]
@@ -75,7 +75,7 @@ const config = {
 
     `${baseURL}/assets/img/entities/char/char-princess-girl.png`,
 
-    `${baseURL}/assets/img/objects/heart.png`
+    `${baseURL}/assets/img/objects/plastico.png`
   ]
 }
 
