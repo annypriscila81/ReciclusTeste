@@ -67,16 +67,25 @@ class Game {
 
   showStartScreen = () => {
 
-    // TODO: add event listener for space bar
     const startScreen = document.querySelector('#startScreen');
-    startScreen.classList.add('show');
-
     const buttonPlay = document.querySelector('#playGame');
-    buttonPlay.focus();
-    buttonPlay.addEventListener('click', () => {
+
+    const startGame = () => {
+
       startScreen.classList.remove('show');
       myGame.startGettingInput();
-    });
+    }
+    const spaceBarStartGame = (e) => { 
+
+      if (e.keyCode == 32) startGame();
+      document.removeEventListener('keyup', spaceBarStartGame);
+    };
+
+    startScreen.classList.add('show');
+
+    buttonPlay.focus();
+    buttonPlay.addEventListener('click', startGame);
+    document.addEventListener('keyup', spaceBarStartGame);
 
     this.updateTopPanel();
   };
