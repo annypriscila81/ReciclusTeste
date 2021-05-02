@@ -6,8 +6,8 @@
  * avatar e outras entidades (definidos no game.js).
  * 
  * Uma game engine tem a funcionalidade de desenhar os frames do jogo repetidamente 
- * (como no caso de flipbooks que você ter feita quando era criança). Quando seu 
- * avatar se movimenta pela tela, pode parecer que ele esta em movimento apesar de 
+ * (como no caso de flipbooks que você fazia quando era criança). Quando seu 
+ * avatar se anda pela tela, pode parecer que ele esta em movimento apesar de 
  * não ser o caso. O que está acontecendo de fato é que toda a cena foi desenhada 
  * diversas vezes para criar uma ilusão de animação.
  * 

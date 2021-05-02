@@ -3,8 +3,8 @@ const reciclus = new Game();
 
 window.onload = () => {
   
-    // reciclus.showStartScreen();
-    reciclus.startGettingInput();
+    reciclus.showStartScreen();
+    // reciclus.startGettingInput();
 }
 
 // TODO: add more enemies

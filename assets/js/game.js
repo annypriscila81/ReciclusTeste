@@ -10,13 +10,13 @@ class Game {
 
     this.score = 0;
     this.level = 0;
-    this.player = new Player(100, 400);
+    this.player = new Player(this, 100, 400);
 
     // TODO: calculate and insert enemies automatically
     this.enemies = [
-      new Enemy(40),
-      new Enemy(130),
-      new Enemy(220)
+      new Enemy(this, 40),
+      new Enemy(this, 130),
+      new Enemy(this, 220)
     ];
   }
 
@@ -45,7 +45,7 @@ class Game {
 
   startGettingInput = () => {
 
-    const input = direction => reciclus.player.handleInput(direction);
+    const input = direction => this.player.handleInput(direction);
 
     document.addEventListener('keyup', (e) => {
 
@@ -73,7 +73,7 @@ class Game {
     const startGame = () => {
 
       startScreen.classList.remove('show');
-      reciclus.startGettingInput();
+      this.startGettingInput();
     }
     const spaceBarStartGame = (e) => { 
 
@@ -107,7 +107,7 @@ class Game {
     const resetGame = () => {
 
       gameOverScreen.classList.remove('show');
-      reciclus.reset();
+      this.reset();
     }
     const spaceBarResetGame = (e) => { 
 
@@ -143,8 +143,11 @@ class Game {
 
 class Enemy {
 
-  constructor(x) {
+  game;
 
+  constructor(game, x) {
+
+    this.game = game;
     // TODO: enemy sprite as parameter
     this.sprite = `${baseURL}/assets/img/entities/enemy-bug.png`;
     this.x = x;
@@ -191,17 +194,15 @@ class Enemy {
   
   checkCollisions = () => {
 
-    const player = reciclus.player;
-
     /* Confere se o inimigo e jogador estão na mesma linha do grid. */
-    if (this.x === player.x) {
+    if (this.x === this.game.player.x) {
       
       /* Confere se o inimigo e jogador estão se tocado, verticalmente. */
       const enemyBottomSideY = this.y + 101;
-      const playerBottomSideY = player.y;
+      const playerBottomSideY = this.game.player.y;
 
-      if((enemyBottomSideY > player.y) && !(playerBottomSideY < this.y)) {
-        player.hit();
+      if((enemyBottomSideY > playerBottomSideY) && !(playerBottomSideY < this.y)) {
+        this.game.player.hit();
       }
     } 
   };
@@ -209,9 +210,12 @@ class Enemy {
 
 class Player {
 
-  // TODO: make use of x and y parameters
-  constructor(x, y) {
+  game;
 
+  // TODO: make use of x and y parameters
+  constructor(game, x, y) {
+
+    this.game = game;
     // TODO: player sprite as parameter
     this.sprite = `${baseURL}/assets/img/entities/char/char-boy.png`;
     
@@ -245,10 +249,10 @@ class Player {
   
     this.lives--;
 
-    reciclus.updateTopPanel();
+    this.game.updateTopPanel();
 
     // TODO: implement different business logic (lives === 0 && health === 0)
-    if (this.lives === 0) reciclus.showGameOverScreen();
+    if (this.lives === 0) this.game.showGameOverScreen();
   };
   
   render = () => {
@@ -263,7 +267,7 @@ class Player {
     this.points += 10;
     this.backToInitialPosition();
 
-    reciclus.goToNextLevel();
+    this.game.goToNextLevel();
   };
   
   // TODO: automatically determine boundaries
@@ -289,8 +293,6 @@ class Player {
 
 class Utils {
 
-  /* Baseado em: 
-   * https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/random */
   static getRandomInt = (min, max) => {
 
     min = Math.ceil(min);
