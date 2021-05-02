@@ -102,21 +102,30 @@ class Game {
     this.updateTopPanel();
   };
 
-  // TODO: add event listener for space bar
   showGameOverScreen = () => {
 
+    const resetGame = () => {
+
+      gameOverScreen.classList.remove('show');
+      myGame.reset();
+    }
+    const spaceBarResetGame = (e) => { 
+
+      if (e.keyCode == 32) resetGame();
+      document.removeEventListener('keyup', spaceBarResetGame);
+    };
+
     const gameOverScreen = document.querySelector('#gameOverScreen');
-    gameOverScreen.classList.add('show');
+          gameOverScreen.classList.add('show');
 
     const finalScore = document.querySelector('.points-finalScore');
-    finalScore.innerHTML = this.player.points;
-
+          finalScore.innerHTML = this.player.points;
+    
     const buttonTryAgain = document.querySelector('#tryAgain');
-    buttonTryAgain.focus();
-    buttonTryAgain.addEventListener('click', function() {
-        gameOverScreen.classList.remove('show');
-        myGame.reset();
-    });
+          buttonTryAgain.focus();
+          buttonTryAgain.addEventListener('click', resetGame);
+
+    document.addEventListener('keyup', spaceBarResetGame);
   };
 
   reset = () => {
