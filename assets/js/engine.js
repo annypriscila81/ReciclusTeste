@@ -1,17 +1,18 @@
-/* Engine.js
- *
- * This file provides the game loop functionality (update entities and render),
- * draws the initial game board on the screen, and then calls the update and
- * render methods on your player and enemy objects (defined in your game.js).
- *
- * A game engine works by drawing the entire game screen over and over, kind of
- * like a flipbook you may have created as a kid. When your player moves across
- * the screen, it may look like just that image/character is moving or being
- * drawn but that is not the case. What's really happening is the entire "scene"
- * is being drawn over and over, presenting the illusion of animation.
- *
- * This engine makes the canvas' context (ctx) object globally available to make 
- * writing game.js a little simpler to work with.
+/* engine.js
+ * 
+ * Este arquivo tem a funcionalidade de loop: atualização e renderização entidades.
+ * 
+ * Desenha a tela inicial e depois invoca os métodos de atualização e renderização do
+ * avatar e outras entidades (definidos no game.js).
+ * 
+ * Uma game engine tem a funcionalidade de desenhar os frames do jogo repetidamente 
+ * (como no caso de flipbooks que você ter feita quando era criança). Quando seu 
+ * avatar se movimenta pela tela, pode parecer que ele esta em movimento apesar de 
+ * não ser o caso. O que está acontecendo de fato é que toda a cena foi desenhada 
+ * diversas vezes para criar uma ilusão de animação.
+ * 
+ * Esta engine faz com que o objeto de contexto do canvas fique disponível globalmente.
+ * Deste modo, o desenvolvimento no arquivo game.js fica mais simples.
  */
 
 const Engine = ((global) => {
@@ -28,16 +29,15 @@ const Engine = ((global) => {
 
   doc.getElementById("canvas_container").appendChild(canvas);
 
-  /* This function serves as the kickoff point for the game loop itself
-   * and handles properly calling the update and render methods. */
+  /* Esta função serve como um ponto de início para o loop do jogo, além de 
+   * se encarregar da invocação dos métodos de atualização e renderização.  */
   main = () => {
 
-    /* Get our time delta information which is required if your game
-     * requires smooth animation.
+    /* Obtém o nosso delta timing, que é um requisito para o jogo rodar liso.
      * 
-     * Because everyone's computer processes instructions at different 
-     * speeds we need a constant value that would be the same for everyone
-     * (regardless of how fast their computer is) - hurray time! */
+     * Devido ao fato que diferentes computadores processam instruções em
+     * diferentes velocidades, nós precisamos obter um valor constante e identico no 
+     * computador de todo mundo (independente de quão rápido seja o computador). */
     //TODO: replace dt by delta
     const now = Date.now(),
           dt = (now - lastTime) / 1000.0;
@@ -45,18 +45,18 @@ const Engine = ((global) => {
     update(dt);
     render();
 
-    /* Set our lastTime variable which is used to determine the time delta
-     * for the next time this function is called. */
+    /* Cria nossa variável lastTime que é usada para determinar o delta timing,
+     * quando a função for invocada novamente. */
     lastTime = now;
 
-    /* Use the browser's requestAnimationFrame function to call this
-     * function again as soon as the browser is able to draw another frame. */
+    /* Use a função nativa do navegador "requestAnimationFrame" para invocar esta
+     * função recursivamente, sempre que o navegador puder desenhar um novo frame. */
     win.requestAnimationFrame(main);
   }
 
-  /* This function does some initial setup that should only occur once,
-   * particularly setting the lastTime variable that is required for the
-   * game loop. */
+  /* Esta função faz algumas configurações iniciais que devem acontecer somente uma
+   * vez. Mais especificamente: configurando a variável lastTime que é um requisito 
+   * para o loop do jogo. */
   init = () => {
 
     //TODO: don't spawn entities until user starts game
@@ -65,29 +65,26 @@ const Engine = ((global) => {
     main();
   }
 
-  /* This function is called by main (our game loop) and itself calls all
-   * of the functions which may need to update entity's data.
-   *
-   * Based on how you implement your collision detection (when two entities 
-   * occupy the same space, for instance when your character should die),
-   * you may find the need to add an additional function call here.
+  /* Esta função é invocada por main() e ela invoca todas as funções que podem
+   * estar precisando atualizar os dados de uma entidade.
    * 
-   * For now, we've left it commented out - you may or may not want 
-   * to implement this functionality this way (you could just implement 
-   * collision detection on the entities themselves within your game.js file). */
+   * Dependendo de como você implementa a detecção de colisão (quando duas 
+   * entidades ocupam o mesmo espaço), você pode precisar invocar outras 
+   * funções, por aqui.
+   * */
   update = (dt) => {
 
     updateEntities(dt);
     checkCollisions();
   }
 
-  /* This is called by the update function and loops through all of the
-   * objects within your enemies array as defined in game.js and calls
-   * their update() methods.
+  /* Esta função é invocada por update() para fazer iteração e invocação 
+   * do método update() de objetos na sua array de inimigos, definida em game.js.
    * 
-   * It will then call the update function for your player object. 
-   * These update methods should focus purely on updating the data/properties
-   * related to the object. Do your drawing in your render methods. */
+   * Métodos update() de entidades devem focar apenas em atualizar dados ou 
+   * propriedades relacionadas ao objeto. Crie desenhos no canvas, usando 
+   * métodos render().
+  */
   updateEntities = (dt) => {
 
     myGame.enemies.forEach((enemy) => enemy.update(dt));
@@ -98,23 +95,27 @@ const Engine = ((global) => {
     myGame.enemies.forEach((enemy) => enemy.checkCollisions());
   }
 
-  /* This function initially draws the "game level", it will then call
-   * the renderEntities function. Remember, this function is called every
-   * game tick (or loop of the game engine) because that's how games work -
-   * they are flipbooks creating the illusion of animation but in reality
-   * they are just drawing the entire screen over and over. */
+  /* Esta função, inicialmente, desenha o level do jogo. É só depois que a 
+   * função renderEntities() passa à ser invocada.
+   * 
+   * Lembre-se que esta função é invocada a cada game tick (loop do jogo) e é 
+   * assim que jogos funcionam: são flipbooks que criam a ilusão de animação. 
+   * No entanto, por debaixo dos panos: são vários desenhos exibidos em curto 
+   * espaço de tempo. */
   render = () => {
 
-    /* This array holds the relative URL to the image used
-     * for that particular row of the game level. */
+    /* Esta array armazena URLs relativas das imagens utilizadas 
+     * por uma determinada linha da tela do jogo. */
     //TODO: replace for other background
     const rowImages = [
-        `${baseURL}/assets/img/sprites/water-block.png`,   // Top row is water
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // Row 1 of 3 of stone
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // Row 2 of 3 of stone
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // Row 3 of 3 of stone
-        `${baseURL}/assets/img/sprites/grass-block.png`,   // Row 1 of 2 of grass
-        `${baseURL}/assets/img/sprites/grass-block.png`    // Row 2 of 2 of grass
+        `${baseURL}/assets/img/sprites/water-block.png`,   // linha superior feita de água
+
+        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 1/3 feita de pedras
+        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 2/3 feita de pedras
+        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 3/3 feita de pedras
+
+        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 1/2 feita de grama
+        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 2/2 feita de grama
       ],
 
       numRows = 6,
@@ -122,22 +123,21 @@ const Engine = ((global) => {
 
       let row, col;
     
-    // Before drawing, clear existing canvas
+    // antes de desenhar no canvas, limpe-o.
     ctx.clearRect(0,0,canvas.width,canvas.height)
 
-    /* Loop through the number of rows and columns we've defined above
-     * and, using the rowImages array, draw the correct image for that
-     * portion of the "grid". */
+    /* Faça iterações de acordo com o número de linhas e colunas definidas acima e,
+     * usando a array rowImages: desenhe a imagem correta para aquela parte do grid. */
     for (row = 0; row < numRows; row++) {
       for (col = 0; col < numCols; col++) {
 
-        /* The drawImage function of the canvas' context element
-         * requires 3 parameters: the image to draw, the x coordinate
-         * to start drawing and the y coordinate to start drawing.
+        /* Para começar a desenhar, a função drawImage() do elemento de contexto 
+         * do canvas requer 3 parâmetros: url da imagem à ser desenhada, 
+         * coordenada do eixo horizontal e coordenada do eixo vertical.
          * 
-         * We're using our Resources helpers to refer to our images
-         * so that we get the benefits of caching these images, since
-         * we're using them over and over. */
+         * Estamos utilizando métodos utilitário de Resources para que tenhamos o 
+         * benefício de fazer cache de imagens, já que elas são desenhadas 
+         * repetidamente. */
         ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
       }
     }
@@ -145,27 +145,25 @@ const Engine = ((global) => {
     renderEntities();
   }
 
-  /* This function is called by the render function and is called on each game
-   * tick. Its purpose is to then call the render functions you have defined
-   * on your enemy and player entities within game.js */
+  /* Esta função é invocada por render() a cada game tick. O propósito desta é 
+   * invocar funções render() que você tenha definido nas entidades do jogo, em game.js. */
   renderEntities = () => {
 
-    /* Loop through all of the objects within the enemies array and call
-     * the render function you have defined. */
     myGame.enemies.forEach((enemy) => enemy.render());
     myGame.player.render();
   }
 
-  /* This function does nothing but it could have been a good place to
-   * handle game reset states - maybe a new game menu or a game over screen
-   * those sorts of things. It's only called once by the init() method. */
+  /* Esta função não faz nada, mas pode servir para manipular o estado de reset 
+   * do jogo. Talvez: um novo menu de jogo, tela de gameover ou algo parecido. 
+   * Esta função só é invocada uma única vez pelo método init(). */
   reset = () => {
     // noop
   }
 
-  /* Go ahead and load all of the images we know we're going to need to
-   * draw our game level. Then set init as the callback method, so that when
-   * all of these images are properly loaded our game will start. */
+  /* Aqui, carregamos todas as images que sabemos que vamos precisar para desenhar 
+   * o level do nosso jogo. Depois, init() é definido como método de callback 
+   * para que quando todas estas imagens estejam adequadamente carregadas, nosso 
+   * jogo seja iniciado. */
   //TODO: replace for other background
   Resources.load([
     `${baseURL}/assets/img/sprites/stone-block.png`,
@@ -175,9 +173,10 @@ const Engine = ((global) => {
     `${baseURL}/assets/img/entities/char/char-boy.png`
   ]);
   Resources.onReady(init);
-
-  /* Assign the canvas' context object to the global variable (the window
-   * object when run in a browser) so that developers can use it more easily
-   * from within their game.js files. */
+  
+  /* Atribui objeto de contexto do canvas à uma variável global (o objeto window
+   * quando o jogo é executado em navegadores).
+   * 
+   * Esta é uma forma de facilitar o uso deste objeto, lá no arquivo game.js. */
   global.ctx = ctx;
 })(this);

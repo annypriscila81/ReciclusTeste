@@ -5,7 +5,7 @@ class Game {
   player;
   enemies;
 
-  // should receive settings as parameters
+  // TODO: should receive settings as parameters
   constructor() {
 
     this.score = 0;
@@ -22,15 +22,15 @@ class Game {
 
   updateTopPanel = () => {
 
-    // Update Level
+    // Atualiza o level
     const level = document.querySelector('.level-number');
     level.innerHTML = this.level;
 
-    // Update Score
+    // Atualiza o score
     const playerScore = document.querySelector('.points');
     playerScore.innerHTML = this.player.points;
 
-    // Update Lives
+    // Atualiza as vidas
     const livesContainer = document.getElementById('lives_container');
     livesContainer.innerHTML = "";
 
@@ -60,7 +60,7 @@ class Game {
       input(allowedKeys[e.keyCode]);
     });
 
-    // Arrow directions for mobile usage
+    // Setas de direção para dispositivos móveis.
     document.getElementById('arrow-up')
             .addEventListener('click', () => input('up'));
 
@@ -136,8 +136,6 @@ class Enemy {
 
   constructor(x) {
 
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     // TODO: enemy sprite as parameter
     this.sprite = `${baseURL}/assets/img/entities/enemy-bug.png`;
     this.x = x;
@@ -145,16 +143,17 @@ class Enemy {
     this.reset();
   }
 
-  // Parameter: dt, a time delta between ticks
-  // You should multiply any movement by the dt parameter
-  // which will ensure the game runs at the same speed for
-  // all computers.
+  /* O parâmetro dt é o delta de tempo entre game ticks.
+   * 
+   * Você deve multiplicar qualquer movimento por este parâmetro.
+   * Isso garante que o jogo execute na mesma velocidade, em qualquer computador. */
   update = (dt) => {
   
     // https://discussions.udacity.com/t/how-do-i-define-the-enemys-speed/185100
     this.y = this.y + (this.speed * dt);
     
-    // When enemy reachs the right boundary it gets a new "X" position
+    /* Quando o inimigo alcança a borda inferior, ele recebe uma nova 
+     * coordenada vertical. */
     if (this.y > 606) {
 
       // TODO: we need a more elegant solution
@@ -185,10 +184,10 @@ class Enemy {
 
     const player = myGame.player;
 
-    // Check if enemy and player are at same line
+    /* Confere se o inimigo e jogador estão na mesma linha do grid. */
     if (this.x === player.x) {
       
-      // Check if enemy and player are touching vertically
+      /* Confere se o inimigo e jogador estão se tocado, verticalmente. */
       const enemyBottomSideY = this.y + 101;
       const playerBottomSideY = player.y;
 
@@ -204,8 +203,6 @@ class Player {
   // TODO: make use of x and y parameters
   constructor(x, y) {//TODO
 
-    // The image/sprite for the player, this uses
-    // a helper we've provided to easily load images
     // TODO: player sprite as parameter
     this.sprite = `${baseURL}/assets/img/entities/char/char-boy.png`;
     
@@ -251,7 +248,7 @@ class Player {
       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
   
-  // When Player reaches the "Water Block"
+  /* Invocado quando o jogador chega aos blocs de água. */
   // TODO: only ever level up after a few items are collected (progressively)
   goToNextLevel = () =>{
 
@@ -262,15 +259,14 @@ class Player {
     myGame.goToNextLevel();
   };
   
-  // Handle direction of Player
   // TODO: remove up and down
-  // automatically determine boundaries
+  // TODO: automatically determine boundaries
   handleInput = (key) => {
 
     switch (key) {
       case 'up':
         this.y -= 90;
-        // Check if Player reaches the "Water Block" = Next level
+        /* Confere se o jogador chegou aos blocos de água. */
         if(this.y === -50) this.goToNextLevel();
         break;
 
@@ -298,7 +294,7 @@ class Player {
  ****** UTILS ******
 */
 
-// Based on: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+// Baseado em: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/random
 function getRandomInt(min, max) {//TODO
 
   min = Math.ceil(min);
