@@ -6,15 +6,23 @@ const config = {
 
     enemies: [
       { 
-        sprite: `${baseURL}/assets/img/entities/enemy-bug.png`,
+        sprite: `${baseURL}/assets/img/objects/radioativo.png`,
         xCoord: 40 
       },
       { 
-        sprite: `${baseURL}/assets/img/entities/enemy-bug.png`,
+        sprite: `${baseURL}/assets/img/objects/vidro.png`,
         xCoord: 130 
       },
       { 
-        sprite: `${baseURL}/assets/img/entities/enemy-bug.png`,
+        sprite: `${baseURL}/assets/img/objects/hospitalar.png`,
+        xCoord: 220 
+      },
+      { 
+        sprite: `${baseURL}/assets/img/objects/madeira.png`,
+        xCoord: 220 
+      },
+      { 
+        sprite: `${baseURL}/assets/img/objects/metal.png`,
         xCoord: 220 
       },
     ],
@@ -23,12 +31,16 @@ const config = {
       { 
         sprite: `${baseURL}/assets/img/objects/plastico.png`,
         xCoord: 40 
+      },
+      { 
+        sprite: `${baseURL}/assets/img/objects/plastico.png`,
+        xCoord: 40 
       }
     ]
   },
 
   player: {
-    sprite: `${baseURL}/assets/img/entities/char/char-princess-girl.png`,
+    sprite: `${baseURL}/assets/img/objects/lixeira.png`,
 
     lives: 5,
     points: 0,
@@ -71,9 +83,17 @@ const config = {
     `${baseURL}/assets/img/sprites/water-block.png`,
     `${baseURL}/assets/img/sprites/grass-block.png`,
 
-    `${baseURL}/assets/img/entities/enemy-bug.png`,
-
-    `${baseURL}/assets/img/entities/char/char-princess-girl.png`,
+    `${baseURL}/assets/img/objects/radioativo.png`,
+    `${baseURL}/assets/img/objects/vidro.png`,
+    `${baseURL}/assets/img/objects/nonrecy.png`,
+    `${baseURL}/assets/img/objects/hospitalar.png`,
+    `${baseURL}/assets/img/objects/madeira.png`,
+    `${baseURL}/assets/img/objects/metal.png`,
+    `${baseURL}/assets/img/objects/organico.png`,
+    `${baseURL}/assets/img/objects/papel.png`,
+    `${baseURL}/assets/img/objects/perigoso.png`,
+    
+    `${baseURL}/assets/img/objects/lixeira.png`,
 
     `${baseURL}/assets/img/objects/plastico.png`
   ]
@@ -87,9 +107,7 @@ window.onload = () => {
     // reciclus.startGettingInput();
 }
 
-// TODO: add more enemies
 // TODO: add items to be collected
-// TODO: entities class to be extended or implemented?
 // TODO: mais de um jogador
 // TODO: fix gameover and game start modals reposivity
 // TODO: revisar tradução
