@@ -38,7 +38,6 @@ const Engine = ((global) => {
      * Devido ao fato que diferentes computadores processam instruções em
      * diferentes velocidades, nós precisamos obter um valor constante e identico no 
      * computador de todo mundo (independente de quão rápido seja o computador). */
-    //TODO: replace dt by delta
     const now = Date.now(),
           dt = (now - lastTime) / 1000.0;
 
