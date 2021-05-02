@@ -45,7 +45,7 @@ class Game {
 
   startGettingInput = () => {
 
-    const input = direction => myGame.player.handleInput(direction);
+    const input = direction => reciclus.player.handleInput(direction);
 
     document.addEventListener('keyup', (e) => {
 
@@ -73,7 +73,7 @@ class Game {
     const startGame = () => {
 
       startScreen.classList.remove('show');
-      myGame.startGettingInput();
+      reciclus.startGettingInput();
     }
     const spaceBarStartGame = (e) => { 
 
@@ -107,7 +107,7 @@ class Game {
     const resetGame = () => {
 
       gameOverScreen.classList.remove('show');
-      myGame.reset();
+      reciclus.reset();
     }
     const spaceBarResetGame = (e) => { 
 
@@ -191,7 +191,7 @@ class Enemy {
   
   checkCollisions = () => {
 
-    const player = myGame.player;
+    const player = reciclus.player;
 
     /* Confere se o inimigo e jogador estão na mesma linha do grid. */
     if (this.x === player.x) {
@@ -245,10 +245,10 @@ class Player {
   
     this.lives--;
 
-    myGame.updateTopPanel();
+    reciclus.updateTopPanel();
 
     // TODO: implement different business logic (lives === 0 && health === 0)
-    if (this.lives === 0) myGame.showGameOverScreen();
+    if (this.lives === 0) reciclus.showGameOverScreen();
   };
   
   render = () => {
@@ -263,7 +263,7 @@ class Player {
     this.points += 10;
     this.backToInitialPosition();
 
-    myGame.goToNextLevel();
+    reciclus.goToNextLevel();
   };
   
   // TODO: automatically determine boundaries

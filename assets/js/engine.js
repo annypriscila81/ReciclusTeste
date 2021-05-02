@@ -86,12 +86,12 @@ const Engine = ((global) => {
   */
   updateEntities = (dt) => {
 
-    myGame.enemies.forEach((enemy) => enemy.update(dt));
+    reciclus.enemies.forEach((enemy) => enemy.update(dt));
   }
 
   checkCollisions = () => {
 
-    myGame.enemies.forEach((enemy) => enemy.checkCollisions());
+    reciclus.enemies.forEach((enemy) => enemy.checkCollisions());
   }
 
   /* Esta função, inicialmente, desenha o level do jogo. É só depois que a 
@@ -148,8 +148,8 @@ const Engine = ((global) => {
    * invocar funções render() que você tenha definido nas entidades do jogo, em game.js. */
   renderEntities = () => {
 
-    myGame.enemies.forEach((enemy) => enemy.render());
-    myGame.player.render();
+    reciclus.enemies.forEach((enemy) => enemy.render());
+    reciclus.player.render();
   }
 
   /* Esta função não faz nada, mas pode servir para manipular o estado de reset 
