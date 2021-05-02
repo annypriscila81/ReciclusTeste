@@ -210,7 +210,7 @@ class Enemy {
 class Player {
 
   // TODO: make use of x and y parameters
-  constructor(x, y) {//TODO
+  constructor(x, y) {
 
     // TODO: player sprite as parameter
     this.sprite = `${baseURL}/assets/img/entities/char/char-boy.png`;
@@ -230,7 +230,7 @@ class Player {
   };
   
   // TODO: actually use parameters
-  backToInitialPosition = (x, y) => {//TODO
+  backToInitialPosition = (x, y) => {
 
     this.x = 100;
     this.y = 400;
@@ -240,7 +240,6 @@ class Player {
   // TODO: dissipate enemy on hit
   // TODO: lose health if hit by enemy
   // TODO: dissipate item on hit
-  // TODO: dont get back to initial position
   // TODO: dont get back to initial position
   hit = () =>{
   
@@ -253,7 +252,7 @@ class Player {
     if (this.lives === 0) myGame.showGameOverScreen();
   };
   
-  render = () => {//TODO
+  render = () => {
       ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
   };
   
@@ -268,25 +267,13 @@ class Player {
     myGame.goToNextLevel();
   };
   
-  // TODO: remove up and down
   // TODO: automatically determine boundaries
   handleInput = (key) => {
 
     switch (key) {
-      case 'up':
-        this.y -= 90;
-        /* Confere se o jogador chegou aos blocos de água. */
-        if(this.y === -50) this.goToNextLevel();
-        break;
-
       case 'right':
         this.x += 100;
         if (this.x === 500) this.x = 400;
-        break;
-
-      case 'down':
-        this.y += 90;
-        if(this.y === 490) this.y = 400;
         break;
 
       case 'left':
