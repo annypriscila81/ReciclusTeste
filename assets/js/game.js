@@ -166,22 +166,22 @@ class Enemy {
     if (this.y > 606) {
 
       // TODO: we need a more elegant solution
-      this.x = [0, 100, 200, 300, 400][getRandomInt(0,4)];
+      this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
       this.y = -100;
     }
   };
   
   reset = () => {
 
-    this.speed = getRandomInt(50, 150);
-    this.x = [0, 100, 200, 300, 400][getRandomInt(0,4)];
+    this.speed = Utils.getRandomInt(50, 150);
+    this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
     this.y = -100;
   };
   
   goToNextLevel = () => {
 
-    this.speed += getRandomInt(30,100);
-    this.x = [0, 100, 200, 300, 400][getRandomInt(0,4)];
+    this.speed += Utils.getRandomInt(30,100);
+    this.x = [0, 100, 200, 300, 400][Utils.getRandomInt(0,4)];
     this.y = -100;
   };
   
@@ -284,17 +284,20 @@ class Player {
   };
 }
 
-// TODO: create a class specifically for utils
 // TODO: fisher yates utils
 /*
  ****** UTILS ******
 */
 
-// Baseado em: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-function getRandomInt(min, max) {//TODO
+class Utils {
 
-  min = Math.ceil(min);
-  max = Math.floor(max);
+  /* Baseado em: 
+   * https://developer.mozilla.org/pt-BR/docs/Web/JavaScript/Reference/Global_Objects/Math/random */
+  static getRandomInt = (min, max) => {
 
-  return Math.floor(Math.random() * (max - min)) + min;
+    min = Math.ceil(min);
+    max = Math.floor(max);
+  
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 }
