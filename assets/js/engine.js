@@ -108,11 +108,13 @@ class Engine {
   updateEntities = (dt) => {
 
     this.game.enemies.forEach((enemy) => enemy.update(dt));
+    this.game.items.forEach((item) => item.update(dt));
   }
 
   checkCollisions = () => {
 
     this.game.enemies.forEach((enemy) => enemy.checkCollisions());
+    this.game.items.forEach((item) => item.checkCollisions());
   }
 
   /* Esta função, inicialmente, desenha o level do jogo. É só depois que a 
@@ -164,6 +166,7 @@ class Engine {
   renderEntities = () => {
 
     this.game.enemies.forEach((enemy) => enemy.render());
+    this.game.items.forEach((item) => item.render());
     this.game.player.render();
   }
 

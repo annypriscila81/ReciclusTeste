@@ -3,6 +3,7 @@ var baseURL = "/reciclus";
 const config = {
   game: {
     level: 1,
+
     enemies: [
       { 
         sprite: `${baseURL}/assets/img/entities/enemy-bug.png`,
@@ -16,6 +17,13 @@ const config = {
         sprite: `${baseURL}/assets/img/entities/enemy-bug.png`,
         xCoord: 220 
       },
+    ],
+
+    items: [
+      { 
+        sprite: `${baseURL}/assets/img/objects/heart.png`,
+        xCoord: 40 
+      }
     ]
   },
 
@@ -23,7 +31,7 @@ const config = {
     sprite: `${baseURL}/assets/img/entities/char/char-princess-girl.png`,
 
     lives: 5,
-    points: 30,
+    points: 0,
 
     coords: {
       x: 100,
@@ -62,8 +70,12 @@ const config = {
     `${baseURL}/assets/img/sprites/stone-block.png`,
     `${baseURL}/assets/img/sprites/water-block.png`,
     `${baseURL}/assets/img/sprites/grass-block.png`,
+
     `${baseURL}/assets/img/entities/enemy-bug.png`,
-    `${baseURL}/assets/img/entities/char/char-princess-girl.png`
+
+    `${baseURL}/assets/img/entities/char/char-princess-girl.png`,
+
+    `${baseURL}/assets/img/objects/heart.png`
   ]
 }
 
