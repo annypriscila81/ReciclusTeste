@@ -113,8 +113,8 @@ const Engine = ((global) => {
         `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 2/3 feita de pedras
         `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 3/3 feita de pedras
 
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 1/2 feita de grama
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 2/2 feita de grama
+        `${baseURL}/assets/img/sprites/grass-block.png`,   // linha 1/2 feita de grama
+        `${baseURL}/assets/img/sprites/grass-block.png`,   // linha 2/2 feita de grama
       ],
 
       numRows = 6,
