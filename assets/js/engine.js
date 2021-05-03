@@ -30,8 +30,8 @@ class Engine {
     this.game = game;
 
     this.canvas = canvas.element;
-    this.canvas.width = canvas.width;
-    this.canvas.height = canvas.height;
+    this.canvas.width = column.count * 101;
+    this.canvas.height = row.images.length * 101;
 
     this.row = row;
     this.column = column;
@@ -130,7 +130,7 @@ class Engine {
      * por uma determinada linha da tela do jogo. */
     //TODO: replace for other background
     const rowImages = row.images,
-          rowCount = row.count,
+          rowCount = row.images.length,
           colCount = column.count;
 
     let rowIndex, colIndex;

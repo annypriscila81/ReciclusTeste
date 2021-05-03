@@ -29,8 +29,8 @@ const config = {
     required_xp: 30,
 
     coords: {
-      x: 200,
-      y: 400,
+      // x: 200,
+      // y: 300,
     }
   },
 
@@ -38,32 +38,27 @@ const config = {
     canvas: {
       container: document.getElementById("canvas_container"),
       element: document.createElement('canvas'),
-      width: 505,
-      height: 585
     },
 
     row: {
-      count: 6,
       images: [
-        `${baseURL}/assets/img/sprites/water-block.png`,   // linha superior feita de água
+        `${baseURL}/assets/img/sprites/sky.png`,   // céu
+        `${baseURL}/assets/img/sprites/sky.png`,   // céu
+        `${baseURL}/assets/img/sprites/sky.png`,   // céu
+        `${baseURL}/assets/img/sprites/sky.png`,   // céu
 
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 1/3 feita de pedras
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 2/3 feita de pedras
-        `${baseURL}/assets/img/sprites/stone-block.png`,   // linha 3/3 feita de pedras
-
-        `${baseURL}/assets/img/sprites/grass-block.png`,   // linha 1/2 feita de grama
-        `${baseURL}/assets/img/sprites/grass-block.png`,   // linha 2/2 feita de grama
+        `${baseURL}/assets/img/sprites/grass-block.png`,   // linha feita de grama
       ]
     },
 
     column: {
-      count: 5
+      count: 9
     }
   },
 
   resources: [
     `${baseURL}/assets/img/sprites/stone-block.png`,
-    `${baseURL}/assets/img/sprites/water-block.png`,
+    `${baseURL}/assets/img/sprites/sky.png`,
     `${baseURL}/assets/img/sprites/grass-block.png`,
 
     `${baseURL}/assets/img/objects/radioativo.png`,

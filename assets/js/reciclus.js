@@ -228,8 +228,7 @@ class Enemy {
 
   getRandomColumn = () => {
 
-    let randomColumn = Utils.shuffleArray([0, 100, 200, 300, 400]);
-        randomColumn = randomColumn[0];
+    let randomColumn = Utils.getRandomInt(0, this.game.engine.column.count - 1) * 100;
 
     return randomColumn
   }
@@ -322,8 +321,7 @@ class Item {
 
   getRandomColumn = () => {
 
-    let randomColumn = Utils.shuffleArray([0, 100, 200, 300, 400]);
-        randomColumn = randomColumn[0];
+    let randomColumn = Utils.getRandomInt(0, this.game.engine.column.count - 1) * 100;
 
     return randomColumn
   }
@@ -363,8 +361,11 @@ class Player {
   
   backToInitialPosition = () => {
 
-    this.x = this.config.coords.x;
-    this.y = this.config.coords.y;
+    const middleColumn = Math.floor(this.game.engine.column.count/2) * 100;
+    const lastRow = (this.game.engine.row.images.length * 100) - 200;
+
+    this.x = this.config.coords.x ?? middleColumn;
+    this.y = this.config.coords.y ?? lastRow;
   };
   
   hit = () =>{
@@ -414,14 +415,14 @@ class Player {
 
     switch (key) {
       case 'right':
-        const lastColumn = this.game.engine.canvas.width - this.game.engine.column.count;
+        const lastColumn = this.game.engine.column.count * 100;
         this.x += 100;
-        if (this.x === lastColumn) this.x = 400;
+        if (this.x === lastColumn) this.x = lastColumn - 100;
         break;
 
       case 'left':
         this.x -= 100;
-        if (this.x === this.game.config.spawn.yCoord) this.x = 0;
+        if (this.x === -100) this.x = 0;
         break;
     }
   };
