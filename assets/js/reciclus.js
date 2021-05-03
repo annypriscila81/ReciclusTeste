@@ -7,6 +7,10 @@ class Game {
   enemies;
   items;
 
+  sounds = {
+    track: null
+  };
+
   constructor(config) {
 
     this.config = config.game;
@@ -14,8 +18,17 @@ class Game {
     this.resources = new Resources();
     this.engine = new Engine(this, config.engine, config.resources);
 
+
     this.level = config.game.level;
     this.player = new Player(this, config.player);
+
+    this.sounds.track = document.createElement("audio");
+    this.sounds.track.src = config.game.sounds.track;
+    this.sounds.track.setAttribute("preload", "auto");
+    this.sounds.track.setAttribute("controls", "none");
+    this.sounds.track.style.display = "none";
+    document.body.appendChild(this.sounds.track);
+    this.sounds.track.play();
 
     // TODO: calculate and insert enemies automatically
     this.enemies = config.game.enemies.map(config => new Enemy(this, config));

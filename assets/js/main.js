@@ -17,7 +17,11 @@ const config = {
     items: [
       { sprite: `${baseURL}/assets/img/objects/plastico.png` },
       { sprite: `${baseURL}/assets/img/objects/plastico.png` }
-    ]
+    ],
+
+    sounds: {
+      track: `${baseURL}/assets/audio/soundtrack.webm`
+    }
   },
 
   player: {
