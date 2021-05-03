@@ -393,7 +393,7 @@ class Player {
 
     let progress, result;
 
-    progress = document.body.querySelector('#canvas_container .progress-bar');
+    progress = document.body.querySelector('.panel .progress-bar');
     result = (this.points * 100) / this.required_xp;
     progress.style.width = `${result}%`;
   }
