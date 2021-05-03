@@ -4,30 +4,19 @@ const config = {
   game: {
     level: 1,
 
+    spawn: {
+      yCoord: -150
+    },
+
     enemies: [
-      { 
-        sprite: `${baseURL}/assets/img/objects/radioativo.png`,
-        xCoord: 40 
-      },
-      { 
-        sprite: `${baseURL}/assets/img/objects/vidro.png`,
-        xCoord: 130 
-      },
-      { 
-        sprite: `${baseURL}/assets/img/objects/hospitalar.png`,
-        xCoord: 220 
-      }
+      { sprite: `${baseURL}/assets/img/objects/radioativo.png` },
+      { sprite: `${baseURL}/assets/img/objects/hospitalar.png`  },
+      { sprite: `${baseURL}/assets/img/objects/vidro.png` }
     ],
 
     items: [
-      { 
-        sprite: `${baseURL}/assets/img/objects/plastico.png`,
-        xCoord: 40 
-      },
-      { 
-        sprite: `${baseURL}/assets/img/objects/plastico.png`,
-        xCoord: 40 
-      }
+      { sprite: `${baseURL}/assets/img/objects/plastico.png` },
+      { sprite: `${baseURL}/assets/img/objects/plastico.png` }
     ]
   },
 
@@ -50,7 +39,7 @@ const config = {
       container: document.getElementById("canvas_container"),
       element: document.createElement('canvas'),
       width: 505,
-      height: 606
+      height: 585
     },
 
     row: {

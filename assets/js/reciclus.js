@@ -153,13 +153,13 @@ class Enemy {
 
   constructor(game, config) {
 
-    const { sprite, xCoord } = config;
+    const { sprite } = config;
 
     this.config = config;
     this.game = game;
 
     this.sprite = sprite;
-    this.x = xCoord;
+    this.x = this.game.config.spawn.yCoord;
 
     this.reset();
   }
@@ -177,14 +177,14 @@ class Enemy {
     if (this.y > this.game.engine.canvas.height) {
 
       this.x = this.getRandomColumn();
-      this.y = -100;
+      this.y = this.game.config.spawn.yCoord;
     }
   };
   
   reset = () => {
 
     this.x = this.getRandomColumn();
-    this.y = -100;
+    this.y = this.game.config.spawn.yCoord;
 
     this.setSpeed();
   };
@@ -192,7 +192,7 @@ class Enemy {
   goToNextLevel = () => {
 
     this.x = this.getRandomColumn();
-    this.y = -100;
+    this.y = this.game.config.spawn.yCoord;
 
     this.setSpeed();
   };
@@ -268,14 +268,14 @@ class Item {
     if (this.y > this.game.engine.canvas.height) {
 
       this.x = this.getRandomColumn();
-      this.y = -100;
+      this.y = this.game.config.spawn.yCoord;
     }
   };
   
   reset = () => {
 
     this.x = this.getRandomColumn();
-    this.y = -100;
+    this.y = this.game.config.spawn.yCoord;
 
     this.setSpeed();
   };
@@ -283,7 +283,7 @@ class Item {
   goToNextLevel = () => {
 
     this.x = this.getRandomColumn();
-    this.y = -100;
+    this.y = this.game.config.spawn.yCoord;
 
     this.setSpeed();
   };
@@ -421,7 +421,7 @@ class Player {
 
       case 'left':
         this.x -= 100;
-        if (this.x === -100) this.x = 0;
+        if (this.x === this.game.config.spawn.yCoord) this.x = 0;
         break;
     }
   };
