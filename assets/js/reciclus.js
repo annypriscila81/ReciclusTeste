@@ -80,6 +80,7 @@ class Game {
 
       startScreen.classList.remove('show');
       this.startGettingInput();
+      this.engine.startExecution();
     }
     const spaceBarStartGame = (e) => { 
 
@@ -98,11 +99,40 @@ class Game {
 
   goToNextLevel = () => {
 
+    let counter;
+    let timeout = 3; // time in seconds
+
+    const overlay = document.querySelector("#canvas_container .overlay");
+    const counterElement = overlay.querySelector(".overlay_countdown");
+
+    overlay.classList.toggle('d-none');
+
     this.level++;
+    this.engine.pauseExecution();
+    
+    counterElement.innerHTML = timeout;
+    timeout--;
 
-    this.enemies.forEach(enemy => enemy.goToNextLevel());
+    counter = setInterval(() => {
 
-    this.updateTopPanel();
+      counterElement.innerHTML = timeout;
+
+      if(timeout < 0) {
+
+        clearInterval(counter);
+
+        this.engine.startExecution()
+        this.enemies.forEach(enemy => enemy.goToNextLevel());
+        this.updateTopPanel();
+
+        overlay.classList.toggle('d-none');
+
+        counterElement.innerHTML = ""
+      }
+
+      timeout--;
+
+    }, 1000);
   };
 
   showGameOverScreen = () => {

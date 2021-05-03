@@ -23,6 +23,8 @@ class Engine {
   ctx;
   row;
   column;
+  dt;
+  paused = true;
 
   //TODO: make it a responsive game
   constructor(game, { canvas, row, column }, resources) {
@@ -59,10 +61,10 @@ class Engine {
      * Devido ao fato que diferentes computadores processam instruções em
      * diferentes velocidades, nós precisamos obter um valor constante e identico no 
      * computador de todo mundo (independente de quão rápido seja o computador). */
-    const now = Date.now(),
-          dt = (now - this.lastTime) / 1000.0;
+    const now = Date.now();
+    this.dt = this.paused ? 0 : (now - this.lastTime) / 1000.0;
 
-    this.update(dt);
+    this.update(this.dt);
     this.render();
 
     /* Cria nossa variável lastTime que é usada para determinar o delta timing,
@@ -168,6 +170,16 @@ class Engine {
     this.game.enemies.forEach((enemy) => enemy.render());
     this.game.items.forEach((item) => item.render());
     this.game.player.render();
+  }
+
+  pauseExecution = () => {
+
+    this.paused = true;
+  }
+
+  startExecution = () => {
+
+    this.paused = false;
   }
 
   /* Esta função não faz nada, mas pode servir para manipular o estado de reset 

@@ -81,9 +81,8 @@ const reciclus = new Game(config);
 
 window.onload = () => {
   
-    reciclus.showStartScreen();
+  reciclus.showStartScreen();
 }
 
-// TODO: transition between levels
 // TODO: background
 // TODO: sounds
