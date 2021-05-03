@@ -100,7 +100,6 @@ window.onload = () => {
     reciclus.showStartScreen();
 }
 
-// TODO: fix gameover and game start modals reposivity
 // TODO: transition between levels
 // TODO: background
 // TODO: sounds

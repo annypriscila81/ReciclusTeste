@@ -21,4 +21,22 @@ input {
     border-bottom: 9px solid rgb(102, 155, 102);
     border-right: 9px solid rgb(171, 207, 171);
   }
+
+  &.button.fill {
+
+    height: 100%;
+    width: 100%;
+  }
+
+  &.button.w-100 {
+
+    @media (min-width: 1200px) {
+      
+      &-xl {
+
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
 }
