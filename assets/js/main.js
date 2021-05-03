@@ -44,9 +44,11 @@ const config = {
 
     lives: 5,
     points: 0,
+    
+    required_xp: 30,
 
     coords: {
-      x: 100,
+      x: 200,
       y: 400,
     }
   },
@@ -107,7 +109,9 @@ window.onload = () => {
     // reciclus.startGettingInput();
 }
 
-// TODO: add items to be collected
-// TODO: mais de um jogador
 // TODO: fix gameover and game start modals reposivity
 // TODO: revisar tradução
+// TODO: transition between levels
+// TODO: responsiveness
+// TODO: background
+// TODO: sounds

@@ -37,6 +37,9 @@ class Game {
     const livesContainer = document.getElementById('lives_container');
     livesContainer.innerHTML = "";
 
+    // Atualiza progresso
+    this.player.updateProgress();
+
     for(let index = 0, max = this.player.lives; index < max; index++){
 
       const lifeIcon = document.createElement('i');
@@ -93,14 +96,11 @@ class Game {
     this.updateTopPanel();
   };
 
-  // TODO: go to next level after x amount of points (progressively)
   goToNextLevel = () => {
 
     this.level++;
 
-    for (let index = 0, max = this.enemies.length; index < max; index++) {
-      this.enemies[index].goToNextLevel();
-    };
+    this.enemies.forEach(enemy => enemy.goToNextLevel());
 
     this.updateTopPanel();
   };
@@ -304,7 +304,10 @@ class Item {
       const playerBottomSideY = this.game.player.y;
 
       if((enemyBottomSideY > playerBottomSideY) && !(playerBottomSideY < this.y)) {
+
         this.game.player.collected();
+
+        if (this.game.player.points >= this.game.player.required_xp) this.game.player.goToNextLevel();
         this.reset();
       }
     }
@@ -332,15 +335,18 @@ class Player {
 
   game;
   config;
+  required_xp;
 
   constructor(game, config) {
 
-    const { sprite, lives, points } = config;
+    const { sprite, lives, points, required_xp } = config;
 
+    
     this.config = config;
-
+    
     this.game = game;
     this.sprite = sprite;
+    this.required_xp = required_xp;
     
     this.lives = lives;
     this.points = points;
@@ -352,6 +358,7 @@ class Player {
 
     this.lives = this.config.lives;
     this.points = this.config.points;
+    this.required_xp = this.config.required_xp;
 
     this.backToInitialPosition();
   };
@@ -362,34 +369,38 @@ class Player {
     this.y = this.config.coords.y;
   };
   
-  // TODO: lose health if hit by enemy
-  // TODO: dissipate item on hit
   hit = () =>{
   
     this.lives--;
 
     this.game.updateTopPanel();
 
-    // TODO: implement different business logic (lives === 0 && health === 0)
     if (this.lives === 0) this.game.showGameOverScreen();
   };
 
   collected = () =>{
   
     this.points += 10;
+
     this.game.updateTopPanel();
   };
+
+  updateProgress = () => {
+
+    let progress, result;
+
+    progress = document.body.querySelector('#canvas_container .progress-bar');
+    result = (this.points * 100) / this.required_xp;
+    progress.style.width = `${result}%`;
+  }
   
   render = () => {
     this.game.engine.ctx.drawImage(this.game.resources.get(this.sprite), this.x, this.y);
   };
   
-  /* Invocado quando o jogador chega aos blocos de água. */
-  // TODO: only ever level up after a few items are collected (progressively)
   goToNextLevel = () =>{
 
-    // TODO: points amount depend on item collected
-    this.points += 10;
+    this.required_xp = this.required_xp + this.points;
     this.backToInitialPosition();
 
     this.game.goToNextLevel();
