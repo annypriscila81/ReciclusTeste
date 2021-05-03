@@ -20,7 +20,30 @@ const config = {
     ],
 
     sounds: {
-      track: `${baseURL}/assets/audio/soundtrack.webm`
+      track: {
+        src: `${baseURL}/assets/audio/soundtrack.webm`,
+        volume: 0.2
+      },
+      start: {
+        src: `${baseURL}/assets/audio/effects/start.ogg`,
+        volume: 0.5
+      },
+      gameover: {
+        src: `${baseURL}/assets/audio/effects/gameover.ogg`,
+        volume: 0.5
+      },
+      levelup: {
+        src: `${baseURL}/assets/audio/effects/levelup.ogg`,
+        volume: 0.5
+      },
+      collect: {
+        src: `${baseURL}/assets/audio/effects/collect.ogg`,
+        volume: 0.5
+      },
+      collision: {
+        src: `${baseURL}/assets/audio/effects/collision.mp3`,
+        volume: 1
+      }
     }
   },
 
@@ -87,5 +110,3 @@ window.onload = () => {
   
   reciclus.showStartScreen();
 }
-
-// TODO: sounds

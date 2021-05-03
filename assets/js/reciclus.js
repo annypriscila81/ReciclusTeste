@@ -14,20 +14,22 @@ class Game {
   constructor(config) {
 
     this.config = config.game;
+    
+    const { sounds } = this.config;
 
     this.resources = new Resources();
     this.engine = new Engine(this, config.engine, config.resources);
 
-
     this.level = config.game.level;
     this.player = new Player(this, config.player);
 
-    this.sounds.track = document.createElement("audio");
-    this.sounds.track.src = config.game.sounds.track;
-    this.sounds.track.setAttribute("preload", "auto");
-    this.sounds.track.setAttribute("controls", "none");
-    this.sounds.track.style.display = "none";
-    document.body.appendChild(this.sounds.track);
+    this.sounds.track = Utils.registerSound(sounds.track.src, sounds.track.volume);
+    this.sounds.start = Utils.registerSound(sounds.start.src, sounds.start.volume);
+    this.sounds.gameover = Utils.registerSound(sounds.gameover.src, sounds.gameover.volume);
+    this.sounds.levelup = Utils.registerSound(sounds.levelup.src, sounds.levelup.volume);
+    this.sounds.collect = Utils.registerSound(sounds.collect.src, sounds.collect.volume);
+    this.sounds.collision = Utils.registerSound(sounds.collision.src, sounds.collision.volume);
+
     this.sounds.track.play();
 
     // TODO: calculate and insert enemies automatically
@@ -91,9 +93,10 @@ class Game {
 
     const startGame = () => {
 
+      this.sounds.start.play();
       startScreen.classList.remove('show');
-      this.startGettingInput();
       this.engine.startExecution();
+      this.startGettingInput();
     }
     const spaceBarStartGame = (e) => { 
 
@@ -123,6 +126,7 @@ class Game {
     this.level++;
     this.engine.pauseExecution();
     
+    this.sounds.levelup.play();
     this.updateTopPanel();
 
     counterElement.innerHTML = timeout;
@@ -153,7 +157,13 @@ class Game {
 
     const resetGame = () => {
 
+      this.sounds.gameover.pause();
+      this.sounds.gameover.currentTime = 0;
+      this.sounds.track.play();
+      this.sounds.start.play();
+
       gameOverScreen.classList.remove('show');
+
       this.reset();
     }
     const spaceBarResetGame = (e) => { 
@@ -161,6 +171,12 @@ class Game {
       if (e.keyCode == 32) resetGame();
       document.removeEventListener('keyup', spaceBarResetGame);
     };
+
+    this.engine.pauseExecution();
+
+    this.sounds.track.pause();
+    this.sounds.track.currentTime = 0;
+    this.sounds.gameover.play();
 
     const gameOverScreen = document.querySelector('#gameOverScreen');
           gameOverScreen.classList.add('show');
@@ -183,6 +199,8 @@ class Game {
     for(let index = 0, max = this.enemies.length; index < max; index++){
       this.enemies[index].reset();
     };
+
+    this.engine.startExecution();
 
     this.updateTopPanel();
   };
@@ -416,6 +434,10 @@ class Player {
   
     this.lives--;
 
+    this.game.sounds.collision.pause();
+    this.game.sounds.collision.currentTime = 0;
+    this.game.sounds.collision.play();
+
     this.game.engine.canvas.classList.add('anim--shake');
     this.game.engine.canvas.addEventListener('animationend', () => {
 
@@ -430,6 +452,10 @@ class Player {
   collected = () =>{
   
     this.points += 10;
+
+    this.game.sounds.collect.pause();
+    this.game.sounds.collect.currentTime = 0;
+    this.game.sounds.collect.play();
 
     this.game.updateTopPanel();
   };
@@ -502,5 +528,22 @@ class Utils {
     }
   
     return array;
+  }
+
+  static registerSound(src, volume = 0.5) {
+
+    let sound = document.createElement("audio");
+
+    sound.src = src;
+    sound.volume = volume;
+
+    sound.setAttribute("preload", "auto");
+    sound.setAttribute("controls", "none");
+
+    sound.style.display = "none";
+
+    document.body.appendChild(sound);
+
+    return sound
   }
 }
