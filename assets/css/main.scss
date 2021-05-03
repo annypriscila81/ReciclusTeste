@@ -10,6 +10,7 @@ $baseurl: "{{ site.baseurl }}";
 @import 'base/typography.scss';
 
 // animation
+@import 'animations/helpers.scss';
 @import 'animations/modal.scss';
 
 // components

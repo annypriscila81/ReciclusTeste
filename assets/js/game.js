@@ -371,6 +371,12 @@ class Player {
   
     this.lives--;
 
+    this.game.engine.canvas.classList.add('anim--shake');
+    this.game.engine.canvas.addEventListener('animationend', () => {
+
+      this.game.engine.canvas.classList.remove('anim--shake');
+    })
+
     this.game.updateTopPanel();
 
     if (this.lives === 0) this.game.showGameOverScreen();
