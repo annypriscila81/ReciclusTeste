@@ -5,7 +5,7 @@ const config = {
     level: 1,
 
     spawn: {
-      yCoord: -150
+      yCoord: -180
     },
 
     enemies: [
