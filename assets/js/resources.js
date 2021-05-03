@@ -12,18 +12,6 @@ class Resources {
   resourceCache = {};
   readyCallbacks = [];
 
-  constructor() {
-
-    /* Este objeto define todas as funções disponíveis publicamente, disponíveis 
-    * ao criar um objeto global Resources. */
-    // window.Resources = {
-    //   load,
-    //   get,
-    //   onReady,
-    //   isReady
-    // };
-  }
-
   /* Esta é a função de carregamento e images, disponível publicamente.
    * 
    * Ela aceita uma array de strings com urls de imagens ou uma string para 

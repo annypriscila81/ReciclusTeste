@@ -170,7 +170,6 @@ class Enemy {
    * Isso garante que o jogo execute na mesma velocidade, em qualquer computador. */
   update = (dt) => {
   
-    // https://discussions.udacity.com/t/how-do-i-define-the-enemys-speed/185100
     this.y = this.y + (this.speed * dt);
     
     /* Quando o inimigo alcança a borda inferior, ele recebe uma nova 
@@ -262,7 +261,6 @@ class Item {
    * Isso garante que o jogo execute na mesma velocidade, em qualquer computador. */
   update = (dt) => {
   
-    // https://discussions.udacity.com/t/how-do-i-define-the-enemys-speed/185100
     this.y = this.y + (this.speed * dt);
     
     /* Quando o inimigo alcança a borda inferior, ele recebe uma nova 

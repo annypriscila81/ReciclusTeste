@@ -16,15 +16,7 @@ const config = {
       { 
         sprite: `${baseURL}/assets/img/objects/hospitalar.png`,
         xCoord: 220 
-      },
-      { 
-        sprite: `${baseURL}/assets/img/objects/madeira.png`,
-        xCoord: 220 
-      },
-      { 
-        sprite: `${baseURL}/assets/img/objects/metal.png`,
-        xCoord: 220 
-      },
+      }
     ],
 
     items: [
@@ -106,12 +98,9 @@ const reciclus = new Game(config);
 window.onload = () => {
   
     reciclus.showStartScreen();
-    // reciclus.startGettingInput();
 }
 
 // TODO: fix gameover and game start modals reposivity
-// TODO: revisar tradução
 // TODO: transition between levels
-// TODO: responsiveness
 // TODO: background
 // TODO: sounds
