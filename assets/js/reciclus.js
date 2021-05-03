@@ -110,6 +110,8 @@ class Game {
     this.level++;
     this.engine.pauseExecution();
     
+    this.updateTopPanel();
+
     counterElement.innerHTML = timeout;
     timeout--;
 
@@ -123,7 +125,6 @@ class Game {
 
         this.engine.startExecution()
         this.enemies.forEach(enemy => enemy.goToNextLevel());
-        this.updateTopPanel();
 
         overlay.classList.toggle('d-none');
 

@@ -46,8 +46,6 @@ class Engine {
     * o level do nosso jogo. Depois, init() é definido como método de callback 
     * para que quando todas estas imagens estejam adequadamente carregadas e nosso 
     * jogo seja iniciado. */
-    //TODO: replace for other background
-
     this.game.resources.load(resources);
     this.game.resources.onReady(this.init);
   }
@@ -81,7 +79,6 @@ class Engine {
    * para o loop do jogo. */
   init = () => {
 
-    //TODO: don't spawn entities until user starts game
     this.reset();
     this.lastTime = Date.now();
     this.main();
@@ -130,7 +127,6 @@ class Engine {
 
     /* Esta array armazena URLs relativas das imagens utilizadas 
      * por uma determinada linha da tela do jogo. */
-    //TODO: replace for other background
     const rowImages = row.images,
           rowCount = row.images.length,
           colCount = column.count;

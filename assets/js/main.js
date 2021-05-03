@@ -84,5 +84,4 @@ window.onload = () => {
   reciclus.showStartScreen();
 }
 
-// TODO: background
 // TODO: sounds
