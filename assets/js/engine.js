@@ -26,7 +26,6 @@ class Engine {
   dt;
   paused = true;
 
-  //TODO: make it a responsive game
   constructor(game, { canvas, row, column }, resources) {
 
     this.game = game;

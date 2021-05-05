@@ -17,6 +17,7 @@ class Game {
     
     const { sounds } = this.config;
 
+    this.config = config.game;
     this.resources = new Resources();
     this.engine = new Engine(this, config.engine, config.resources);
 
@@ -30,11 +31,10 @@ class Game {
     this.sounds.collect = Utils.registerSound(sounds.collect.src, sounds.collect.volume);
     this.sounds.collision = Utils.registerSound(sounds.collision.src, sounds.collision.volume);
 
+    /* incia a música de fundo, assim que o jogo começa. */
     this.sounds.track.play();
 
-    // TODO: calculate and insert enemies automatically
     this.enemies = config.game.enemies.map(config => new Enemy(this, config));
-
     this.items = config.game.items.map(config => new Item(this, config));
   }
 
@@ -68,6 +68,7 @@ class Game {
 
     const input = direction => this.player.handleInput(direction);
 
+    /* quais direções o jogador pode ir */
     document.addEventListener('keyup', (e) => {
 
       const allowedKeys = {
@@ -116,7 +117,7 @@ class Game {
   goToNextLevel = () => {
 
     let counter;
-    let timeout = 3; // time in seconds
+    let timeout = 3; // cooldown até trocar de level
 
     const overlay = document.querySelector("#canvas_container .overlay");
     const counterElement = overlay.querySelector(".overlay_countdown");
@@ -221,6 +222,10 @@ class Enemy {
     this.game = game;
 
     this.sprite = sprite;
+
+    /* Coordenada no eixo vertical que os inimigos spawnam, quando chegam 
+     * ao fim da tela ou colidem com o jogador. */
+    this.game.config.spawn = { yCoord: -180 };
     this.x = this.game.config.spawn.yCoord;
 
     this.reset();
@@ -353,15 +358,17 @@ class Item {
     this.game.engine.ctx.drawImage(this.game.resources.get(this.sprite), this.x, this.y);
   };
   
+  /* Para determinar se o jogador encostou em algo, precisamos 
+   * conferir as coordenadas das entidades. */
   checkCollisions = () => {
 
     /* Confere se o item e jogador estão na mesma linha do grid. */
     if (this.x === this.game.player.x) {
       
-      /* Confere se o item e jogador estão se tocado, verticalmente. */
       const enemyBottomSideY = this.y + 101;
       const playerBottomSideY = this.game.player.y;
 
+      /* Confere se o item e jogador estão na mesma coluna do grid. */
       if((enemyBottomSideY > playerBottomSideY) && !(playerBottomSideY < this.y)) {
 
         this.game.player.collected();
@@ -381,6 +388,7 @@ class Item {
     };
   };
 
+  /* configura spawn aleatório no eixo horizontal */
   getRandomColumn = () => {
 
     let randomColumn = Utils.getRandomInt(0, this.game.engine.column.count - 1) * 100;
@@ -426,8 +434,8 @@ class Player {
     const middleColumn = Math.floor(this.game.engine.column.count/2) * 100;
     const lastRow = (this.game.engine.row.images.length * 100) - 200;
 
-    this.x = this.config.coords.x ?? middleColumn;
-    this.y = this.config.coords.y ?? lastRow;
+    this.x = this.config.coords ? this.config.coords.x : middleColumn;
+    this.y = this.config.coords ? this.config.coords.y : lastRow;
   };
   
   hit = () =>{
