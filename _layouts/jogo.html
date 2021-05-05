@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+  <body>
+    <!-- GAME TOP PANEL -->
+    <div class="panel sticky-top">
+      <a href="{{ site.baseurl }}/" 
+          style="position: absolute;left: 0;font-family: 'FontAwesome';text-decoration: none;">
+        <span class="fas fa-arrow-left"></span>
+      </a>
+
+      <div class="level">
+        <h4>Level</h4>
+        <span class="level-number">0</span>
+      </div>
+      
+      <div class="lives">
+        <h4>Vidas</h4>
+        <div id="lives_container"></div>
+      </div>
+
+      <div class="score">
+        <h4>Pontuação</h4>
+        <span class="points">0</span>
+      </div>
+
+      {% include progress.html %}
+    </div>
+    <!-- /GAME TOP PANEL -->
+
+    <div class="d-flex flex-column align-items-center">
+      {% include canvas.html %}
+      {% include start.html %}
+      {% include gameover.html %}
+      {% include arrows.html %}
+    </div>
+    
+    {{ content }}
+    
+    <script src="{{ site.baseurl }}/assets/js/resources.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/engine.js"></script>
+    <script src="{{ site.baseurl }}/assets/js/reciclus.js"></script>
+    <script src='{{ site.baseurl }}/assets/js/main.js'></script>
+  </body>
+</html>
+
+

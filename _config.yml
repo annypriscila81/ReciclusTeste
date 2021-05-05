@@ -1,7 +1,7 @@
 url    : "localhost:4000" # a base do hostname e protocolo do site
 baseurl: "/reciclus" # o sub-caminho do site (e.g. /blog)
 
-title      : reciclus
+title      : Reciclus
 author     : riservato xyz
 
 permalink: pretty

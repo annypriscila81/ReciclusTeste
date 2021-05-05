@@ -5,6 +5,9 @@ $baseurl: "{{ site.baseurl }}";
 // sobrescrições de estilos bootstrap
 @import 'vendor/bootstrap.scss';
 
+// abstracts
+@import 'abstracts/typography.scss';
+
 // base
 @import 'base/reset.scss';
 @import 'base/typography.scss';
@@ -21,3 +24,5 @@ $baseurl: "{{ site.baseurl }}";
 @import 'components/panel.scss';
 @import 'components/progress.scss';
 @import 'components/overlay.scss';
+@import 'components/caixa-lateral.scss';
+@import 'components/links-lixeira.scss';
