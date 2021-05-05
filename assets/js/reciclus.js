@@ -6,9 +6,15 @@ class Game {
   player;
   enemies;
   items;
+  volume;
 
   sounds = {
-    track: null
+    track: null,
+    start: null,
+    gameover: null,
+    levelup: null,
+    collect: null,
+    collision: null
   };
 
   constructor(config) {
@@ -34,8 +40,24 @@ class Game {
     /* incia a música de fundo, assim que o jogo começa. */
     this.sounds.track.play();
 
+    const volume = document.body.querySelector(".volume_controls");
+    volume.addEventListener('click', () => {
+
+      const controls = Array.from(volume.querySelectorAll('span.fas'));
+
+      this.volumeToggle();
+
+      controls.forEach(control => control.classList.toggle('d-none'));
+    })
+
     this.enemies = config.game.enemies.map(config => new Enemy(this, config));
     this.items = config.game.items.map(config => new Item(this, config));
+  }
+
+  volumeToggle = () => {
+
+    if (this.sounds.track.paused) this.sounds.track.play();
+    else this.sounds.track.pause();
   }
 
   updateTopPanel = () => {
@@ -439,6 +461,8 @@ class Player {
   };
   
   hit = () =>{
+
+    const canvasContainer = document.querySelector("#canvas_container");
   
     this.lives--;
 
@@ -446,10 +470,10 @@ class Player {
     this.game.sounds.collision.currentTime = 0;
     this.game.sounds.collision.play();
 
-    this.game.engine.canvas.classList.add('anim--shake');
-    this.game.engine.canvas.addEventListener('animationend', () => {
+    canvasContainer.classList.add('anim--shake');
+    canvasContainer.addEventListener('animationend', () => {
 
-      this.game.engine.canvas.classList.remove('anim--shake');
+      canvasContainer.classList.remove('anim--shake');
     })
 
     this.game.updateTopPanel();

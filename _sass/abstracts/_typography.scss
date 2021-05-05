@@ -10,12 +10,12 @@ $fontawesome: $fonts + '/fontawesome';
   
   font-family:'FontAwesome';
   
-  src: url($fontawesome + '/fontawesome-webfont.eot');
-  src: url($fontawesome + '/fontawesome-webfont.eot?#iefix') format('embedded-opentype'),
-      url($fontawesome + '/fontawesome-webfont.woff2') format('woff2'),
-      url($fontawesome + '/fontawesome-webfont.woff') format('woff'),
-      url($fontawesome + '/fontawesome-webfont.ttf') format('truetype'),
-      url($fontawesome + '/fontawesome-webfont.svg#fontawesomeregular') format('svg');
+  src: url($fontawesome + '/fa-solid-900.eot');
+  src: url($fontawesome + '/fa-solid-900.eot?#iefix') format('embedded-opentype'),
+      url($fontawesome + '/fa-solid-900.woff2') format('woff2'),
+      url($fontawesome + '/fa-solid-900.woff') format('woff'),
+      url($fontawesome + '/fa-solid-900.ttf') format('truetype'),
+      url($fontawesome + '/fa-solid-900.svg#fontawesomeregular') format('svg');
       
   font-weight:normal;
   font-style:normal

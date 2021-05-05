@@ -1,0 +1,15 @@
+.volume {
+
+  &_controls {
+
+    font-family: 'FontAwesome';
+    font-size: 2rem;
+    color: white;
+
+    position: absolute;
+
+    margin: 1rem;
+
+    cursor: pointer;
+  }
+}
